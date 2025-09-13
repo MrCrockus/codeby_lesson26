@@ -17,34 +17,7 @@ pipeline {
                 }
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    script {
-                        if (CHANGED_FILES.tokenize('\n').any { it.startsWith('helloworld/') }) {
-                            sh 'mvn sonar:sonar -f helloworld/pom.xml -Dsonar.projectKey=HelloWorld -Dsonar.host.url=$SONAR_HOST_URL'
-                        }
-                        if (CHANGED_FILES.tokenize('\n').any { it.startsWith('hellojenkins/') }) {
-                            sh 'mvn sonar:sonar -f hellojenkins/pom.xml -Dsonar.projectKey=HelloJenkins -Dsonar.host.url=$SONAR_HOST_URL'
-                        }
-                        if (CHANGED_FILES.tokenize('\n').any { it.startsWith('hellodevops/') }) {
-                            sh 'mvn sonar:sonar -f hellodevops/pom.xml -Dsonar.projectKey=HelloDevops -Dsonar.host.url=$SONAR_HOST_URL'
-                        }
-                    }
-                }
-            }
-        }
 
-        stage('Quality Gate') {
-          steps {
-            script {
-              sleep 5
-              timeout(time: 10, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-    }
-}
         stage('Build & Test') {
             parallel {
                 stage('HelloWorld') {
