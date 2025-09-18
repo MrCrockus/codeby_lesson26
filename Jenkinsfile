@@ -19,7 +19,7 @@ pipeline {
         }
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('Sonar') {
+                withSonarQubeEnv('SonarQube') {
                     script {
                         if (CHANGED_FILES.tokenize('\n').any { it.startsWith('helloworld/') }) {
                             sh 'mvn sonar:sonar -f helloworld/pom.xml -Dsonar.projectKey=HelloWorld -Dsonar.host.url=$SONAR_HOST_URL'
