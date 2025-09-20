@@ -5,7 +5,7 @@ package com.mycompany.app;
  */
 public class App {
 
-    private static final String MESSAGE = "Hello Codeby Devops!";
+    private static final String MESSAGE = "Hello DevOps!";
 
     public App() {}
 

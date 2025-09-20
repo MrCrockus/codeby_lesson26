@@ -20,6 +20,6 @@ public class AppTest
     public void testAppMessage()
     {
         App app = new App();
-        assertEquals("Hello Codeby Devops!", app.getMessage());
+        assertEquals("Hello DevOps!", app.getMessage());
     }
 }
