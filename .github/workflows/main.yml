@@ -38,7 +38,7 @@ jobs:
       - name: login docker
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: build cont image
-        run: docker build -t ${{ secrets.DOCKER_REPO }}/helloworld:latest ./helloworld
+        run: docker build -t ${{ secrets.DOCKER_REPO }}:helloworld ./helloworld
       - name: publick image
-        run: docker push ${{ secrets.DOCKER_REPO }}/helloworld
+        run: docker push ${{ secrets.DOCKER_REPO }}:helloworld
      
