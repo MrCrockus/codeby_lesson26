@@ -38,7 +38,7 @@ jobs:
       - name: login docker
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: build cont image
-        run: docker build -t ${{ secrets.DOCKER_REPO }}:latest .
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/helloworld:latest
       - name: publick image
         run: docker push ${{ secrets.DOCKER_REPO }}
      
