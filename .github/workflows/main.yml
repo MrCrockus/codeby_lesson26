@@ -40,5 +40,5 @@ jobs:
       - name: build cont image
         run: docker build -t ${{ secrets.DOCKER_REPO }}/helloworld:latest ./helloworld
       - name: publick image
-        run: docker push ${{ secrets.DOCKER_REPO }}/helloworld:latest
+        run: docker push ${{ secrets.DOCKER_REPO }}/helloworld
      
