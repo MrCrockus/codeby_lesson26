@@ -42,3 +42,73 @@ jobs:
       - name: publick image
         run: docker push ${{ secrets.DOCKER_REPO }}:helloworld
      
+  build_hellodevops:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        
+      - name: Setup JDK
+        uses: actions/setup-java@v5.0.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          
+      - name: cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+      
+      - name: build and test
+        run: mvn -B -f hellodevops/pom.xml clean verify
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: helloworld-jar
+          path: helloworld/target/*.jar
+         
+      - name: login docker
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: build cont image
+        run: docker build -t ${{ secrets.DOCKER_REPO }}:hellodevops ./hellodevops
+      - name: publick image
+        run: docker push ${{ secrets.DOCKER_REPO }}:hellodevops
+
+  build_hellojenkins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        
+      - name: Setup JDK
+        uses: actions/setup-java@v5.0.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          
+      - name: cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+      
+      - name: build and test
+        run: mvn -B -f hellojenkins/pom.xml clean verify
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: helloworld-jar
+          path: helloworld/target/*.jar
+         
+      - name: login docker
+        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: build cont image
+        run: docker build -t ${{ secrets.DOCKER_REPO }}:hellojenkins ./hellojenkins
+      - name: publick image
+        run: docker push ${{ secrets.DOCKER_REPO }}:hellojenkins
+        
